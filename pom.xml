@@ -35,7 +35,9 @@
 
     <openmrs.version>2.4.0-SNAPSHOT</openmrs.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tomcat.version>7.0.50</tomcat.version>
+    <tomcat.version>7.0.109</tomcat.version>
+    <junitVersion>5.7.0</junitVersion>
+    <mockitoVersion>3.12.4</mockitoVersion>
   </properties>
 
   <dependencies>
@@ -64,17 +66,41 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-mxj-fixed</artifactId>
-      <version>5.0.12</version>
-      <scope>compile</scope>
+      <groupId>ch.vorburger.mariaDB4j</groupId>
+      <artifactId>mariaDB4j</artifactId>
+      <version>2.5.3</version>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-mxj-db-files-fixed</artifactId>
-      <version>5.0.12-20170418</version>
-      <scope>compile</scope>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junitVersion}</version>
+      <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junitVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockitoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockitoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>${mockitoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -109,8 +135,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <fork>true</fork>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>
@@ -222,6 +248,19 @@
                 </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>ch.vorburger.mariaDB4j</groupId>
+          <artifactId>mariaDB4j-maven-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <databaseName>openmrs</databaseName>
+            <args>
+              <arg>--character-set-server=utf8</arg>
+              <arg>--collation-server=utf8_general_ci</arg>
+              <arg>--max_allowed_packet=32M</arg>
+            </args>
           </configuration>
         </plugin>
       </plugins>
