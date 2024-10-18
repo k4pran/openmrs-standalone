@@ -1,6 +1,6 @@
 
 ...............QUICK SUMMARY FOR BUILDING THE STANDALONE.....................
-* Increase the maven memory: e.g. export MAVEN_OPTS="-Xms1012m -Xmx2024m -XX:PermSize=556m -XX:MaxPermSize=1012m"
+* Increase the maven memory: e.g. export MAVEN_OPTS="-Xms1012m -Xmx2024m"
 * mvn clean
 * mvn package -Dopenmrs.version=1.9.0
 * If you are building standalone for OpenMRS 1.8.x you need to append the above command with -P1.8.x 

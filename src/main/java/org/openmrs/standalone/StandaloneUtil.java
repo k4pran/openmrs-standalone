@@ -308,21 +308,20 @@ public class StandaloneUtil {
 	private static boolean setMysqlPassword(String url, String mysqlPort, String username, String oldPassword, String newPassword) {
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 
 			MariaDbController.startMariaDB(mysqlPort);
 
-			String sql = "UPDATE mysql.user SET password=PASSWORD(?) WHERE User=?";
+			String sql = "SET PASSWORD FOR '" + username + "'@localhost = PASSWORD(?);";
 
-			try (Connection connection = DriverManager.getConnection(url, "root", "");
+			try (Connection connection = DriverManager.getConnection(url, "root", MariaDbController.getRootPassword());
 				 PreparedStatement statement = connection.prepareStatement(sql)) {
 
 				statement.setString(1, newPassword);
-				statement.setString(2, username);
 
-				int rowsAffected = statement.executeUpdate();
+				statement.executeUpdate();
 
-				return rowsAffected > 0;
+				return true;
 
 			} catch (SQLException ex) {
 				ex.printStackTrace();
@@ -407,7 +406,7 @@ public class StandaloneUtil {
 	 */
 	public static void startupDatabaseToCreateDefaultUser(String mysqlPort) throws Exception {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
 			throw new RuntimeException("cannot find mysql driver class", ex);
 		}
@@ -419,7 +418,7 @@ public class StandaloneUtil {
 
 		MariaDbController.startMariaDB(mysqlPort);
 
-		try (Connection conn = DriverManager.getConnection(url, "root", "");
+		try (Connection conn = DriverManager.getConnection(url, "root", MariaDbController.getRootPassword());
 			 Statement stmt = conn.createStatement()) {
 
 			String createUserSQL = "CREATE USER IF NOT EXISTS 'openmrs'@'localhost' IDENTIFIED BY 'test';";

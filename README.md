@@ -21,7 +21,7 @@ Depending on what OpenMRS software artifact you are releasing, you may need to c
 
 ### Increasing maven memory
 
-Increase the maven memory: e.g. export MAVEN_OPTS="-Xms1012m -Xmx2024m -XX:PermSize=556m -XX:MaxPermSize=1012m"
+Increase the maven memory: e.g. export MAVEN_OPTS="-Xms1012m -Xmx2024m"
 
 ### Running the build in two steps
 

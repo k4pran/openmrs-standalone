@@ -98,7 +98,7 @@ public class Bootstrap {
 		try {	
 			Properties properties = OpenmrsUtil.getRuntimeProperties(StandaloneUtil.getContextName());
 			String debugArguments = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005";
-			String vm_arguments = properties.getProperty("vm_arguments", "-Xmx512m -Xms512m -XX:PermSize=256m -XX:MaxPermSize=256m -XX:NewSize=128m");
+			String vm_arguments = properties.getProperty("vm_arguments", "-Xmx512m -Xms512m -XX:NewSize=128m");
 			vm_arguments = debugArguments + " " + vm_arguments;
 
 			// Spin up a separate java process calling a non-default Main class in our Jar.  

@@ -81,7 +81,7 @@ class StandaloneUtilTest {
             StandaloneUtil.startupDatabaseToCreateDefaultUser(MARIADB_PORT);
 
             MariaDbController.startMariaDB(MARIADB_PORT);
-            try (Connection connection = DriverManager.getConnection(DEFAULT_URL, "root", "")) {
+            try (Connection connection = DriverManager.getConnection(DEFAULT_URL, "root", MariaDbController.getRootPassword())) {
 
                 assertNotNull(connection, "Connection to MariaDB with 'root' user should not be null");
                 assertFalse(connection.isClosed(), "Connection to MariaDB should be open");
@@ -167,7 +167,6 @@ class StandaloneUtilTest {
 
             Files.deleteIfExists(propertiesFile);
             Files.deleteIfExists(tempDirectory);
-
 
             assertEquals(MARIADB_PORT, resultPort);
 
